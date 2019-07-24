@@ -102,7 +102,7 @@ export class Keyboard extends Component {
                 <Button block
                         variant={(this.state.address[0]===0)? "outline-danger":"danger"}
                         onClick={this.props.reset}
-                        disabled = {this.state.address[0]===0}
+                        disabled = {this.state.address[0]===0 || this.state.gateIsActive}
                         >RESET</Button>
                 </Alert>
                 </Col>
