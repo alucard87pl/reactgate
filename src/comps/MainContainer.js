@@ -9,18 +9,33 @@ import { Row, Col, Alert } from 'react-bootstrap';
 
 import UIFx from "uifx";
 import iris from '../comps/sounds/open.mp3'
+import kawoosh from '../comps/sounds/kawoosh.wav'
+import shutGate from '../comps/sounds/close.mp3'
 
 const irisOpening = new UIFx({
     asset: iris,
     volume: 0.1    
 })
 
+const wormhole = new UIFx({
+  asset: kawoosh,
+  volume: 0.1    
+})
+
+const shutdown = new UIFx({
+  asset: shutGate,
+  volume: 0.1    
+})
+
+
+
 const INITIAL_STATE = {
   dialMode: "DHD",
   c: 0,
   address: [0,0,0,0,0,0,1],
   gatePos: 0,
-  irisOpen: true
+  irisOpen: true,
+  gateIsActive: false
 };
 
 
@@ -29,6 +44,7 @@ export class MainContainer extends React.Component {
     super(props)
     this.addressUpdateHandler = this.addressUpdateHandler.bind(this)
     this.addressResetHandler = this.addressResetHandler.bind(this)
+    this.gateActivationHandler = this.gateActivationHandler.bind(this)
     this.gateReset = this.gateReset.bind(this);
     this.gateSpin = this.gateSpin.bind(this);
     this.irisToggle = this.irisToggle.bind(this)
@@ -44,6 +60,11 @@ export class MainContainer extends React.Component {
   irisToggle(){
     this.setState({irisOpen: !this.state.irisOpen})
     irisOpening.play();
+  }
+
+  gateActivationHandler(){
+    this.setState({gateIsActive: !this.state.gateIsActive});
+    (!this.state.gateIsActive)? wormhole.play() : shutdown.play()
   }
 
   gateReset(){
@@ -97,12 +118,13 @@ export class MainContainer extends React.Component {
           <Alert.Heading>
             <span style={{fontVariant: "small-caps"}}>SG-React:</span> A React-Based Stargate simulator.
           </Alert.Heading>
-          Dialing Mode: {this.state.dialMode}
+          {this.state.gateIsActive.toString()}
         </Alert>
         <Row>
           <Col md={8}>
             <Gate gatePos={this.state.gatePos}
                   iris={this.state.irisOpen}
+                  gateIsActive={this.state.gateIsActive}
             />
           </Col>
           <Col md={4}>
@@ -124,6 +146,8 @@ export class MainContainer extends React.Component {
             counter = {this.state.c}
             dialMode = {this.state.dialMode}
             reset = {this.addressResetHandler}
+            gateIsActive={this.state.gateIsActive}
+            gateActivationHandler={this.gateActivationHandler}
             />
         </Row>
       </Container>

@@ -2,13 +2,11 @@ import React, { Component } from 'react'
 import { Alert, Container, Row, Col} from "react-bootstrap";
 import gate from "./gate.png";
 import iris from "./iris.png"
+import eventHorizon from "./horizon.png"
 import glyphs from './glyphs';
 
 
 export class Gate extends Component {
-    constructor(props) {
-        super(props);
-    }
     
     glyphLookup(v){
         return glyphs[v].src
@@ -19,7 +17,10 @@ export class Gate extends Component {
 }
 
     componentWillReceiveProps(newProps){
-        this.setState({gatePos: newProps.gatePos, iris: newProps.iris})
+        this.setState({gatePos: newProps.gatePos,
+            iris: newProps.iris,
+            gateIsActive: newProps.gateIsActive
+            })
     }
 
     render() {
@@ -32,12 +33,17 @@ export class Gate extends Component {
             position: 'absolute',
         }
 
-        let IrisCSS = {
+        let horizonCSS = {
             position: 'sticky', 
             zIndex: '2',
+            visibility: (this.props.gateIsActive) ? "initial" : "hidden"
+        }
+        
+        let irisCSS = {
+            position: 'absolute', 
+            zIndex: '3',
             visibility: (this.props.iris) ? "hidden" : "initial"
         }
-
         return (
                 <Alert variant="dark">
                     <Container>
@@ -56,12 +62,20 @@ export class Gate extends Component {
                         alt="Gate"
                         height={500}
                         width={500} />
+                        <div>
                         <img
-                        style={IrisCSS}
+                        style={irisCSS}
                         src={iris}
-                        alt="Gate"
+                        alt="Iris"
                         height={500}
                         width={500} />
+                        <img
+                        style={horizonCSS}
+                        src={eventHorizon}
+                        alt="Event Horizon"
+                        height={500}
+                        width={500} />
+                        </div>
                         </Col>
                         </Row>
                     </Container>

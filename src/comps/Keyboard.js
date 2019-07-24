@@ -7,13 +7,6 @@ import UIFx from "uifx";
 import dhdkey from '../comps/sounds/dhdkey.mp3'
 import sgckey from '../comps/sounds/sgckey.wav'
 import wrong from '../comps/sounds/wrong.wav'
-import kawoosh from '../comps/sounds/kawoosh.wav'
-
-
-const wormhole = new UIFx({
-    asset: kawoosh,
-    volume: 0.1    
-})
 
 const dhdKey = new UIFx({
     asset: dhdkey,
@@ -36,6 +29,7 @@ export class Keyboard extends Component {
     constructor(props) {
         super(props);
         this.handleClick = this.handleClick.bind(this);
+        this.buttonLabelHandler = this.buttonLabelHandler.bind(this)
     }
 
 
@@ -44,18 +38,16 @@ export class Keyboard extends Component {
             address: this.props.setAddress,
             c: this.props.counter,
             dialMode: this.props.dialMode,
-            reset: this.props.reset})
+            reset: this.props.reset,
+            gateIsActive: this.props.gateIsActive})
     }
 
     componentWillReceiveProps(newProps){
         this.setState({address: newProps.setAddress,
             c: newProps.counter,
             dialMode: newProps.dialMode,
-            reset: this.props.reset})
-    }
-
-    dialingHandler(){
-        wormhole.play()
+            reset: this.props.reset,
+            gateIsActive: newProps.gateIsActive})
     }
 
     handleClick(gVal){
@@ -70,6 +62,18 @@ export class Keyboard extends Component {
         }
     }
 
+
+    buttonLabelHandler(){
+        if (this.state.gateIsActive) {
+            return "SHUTDOWN"
+        } else {
+            if (this.state.dialMode === "DHD") {
+                return "DIAL"
+            } else {
+                return "ENCODE"
+            }
+        }
+    }
 
     render() {
         return (
@@ -88,13 +92,13 @@ export class Keyboard extends Component {
                     />
                 })}
                 </Col>
-                <Col>
+                <Col md={2}>
                 <Alert variant="info">
                 <Button block
                     variant={(this.state.address[5]===0)? "outline-success":"success"}
                     disabled = {this.state.address[5]===0}
-                    onClick={this.dialingHandler}
-                    >{(this.state.dialMode === "DHD")? "DIAL" : "ENCODE"}</Button>
+                    onClick={this.props.gateActivationHandler}
+                    >{this.buttonLabelHandler()}</Button>
                 <Button block
                         variant={(this.state.address[0]===0)? "outline-danger":"danger"}
                         onClick={this.props.reset}
