@@ -81,7 +81,7 @@ export class Keyboard extends Component {
                 <Container>
                     <Row>
                     <Col md={10}>
-                { glyphs.map(({id, src, description}) => {
+                { glyphs().map(({id, src, description}) => {
                     return <GlyphButton
                     click={this.handleClick}
                     gVal={id}
