@@ -38,7 +38,6 @@ export const glyphs = [
   { id: 37, src: "./vfx/glyphs/glyph37.png", description: "Sextans" },
   { id: 38, src: "./vfx/glyphs/glyph38.png", description: "Leo Minor" },
   { id: 39, src: "./vfx/glyphs/glyph39.png", description: "Leo" },
-  
 ];
 
 export default glyphs;
