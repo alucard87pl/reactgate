@@ -34,8 +34,8 @@ export class Address extends Component {
     glyphLookup(g){
         if (this.state.address[g] === 0) {
             return blank
-        } else { 
-            return glyphs[this.state.address[g]-1].src
+        } else {
+            return glyphs()[this.state.address[g]-1].src
         }
     }
     

@@ -9,11 +9,11 @@ import glyphs from './glyphs';
 export class Gate extends Component {
     
     glyphLookup(v){
-        return glyphs[v].src
+        return glyphs()[v].src
 }
 
     glyphNameLookup(v){
-        return glyphs[v].description
+        return glyphs()[v].description
 }
 
     componentWillReceiveProps(newProps){
