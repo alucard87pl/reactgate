@@ -27,6 +27,8 @@ const shutdown = new UIFx({
   volume: 0.1    
 })
 
+var timing = 100
+
 
 
 const INITIAL_STATE = {
@@ -35,7 +37,8 @@ const INITIAL_STATE = {
   address: [0,0,0,0,0,0,1],
   gatePos: 0,
   irisOpen: true,
-  gateIsActive: false
+  gateIsActive: false,
+  gatetimer: 0
 };
 
 
@@ -45,10 +48,12 @@ export class MainContainer extends React.Component {
     this.addressUpdateHandler = this.addressUpdateHandler.bind(this)
     this.addressResetHandler = this.addressResetHandler.bind(this)
     this.gateActivationHandler = this.gateActivationHandler.bind(this)
+    this.countDown = this.countDown.bind(this);
     this.gateReset = this.gateReset.bind(this);
     this.gateSpin = this.gateSpin.bind(this);
     this.irisToggle = this.irisToggle.bind(this)
     this.dialModeChange = this.dialModeChange.bind(this)
+    this.timer = 0
   }
 
   state = {}
@@ -62,9 +67,31 @@ export class MainContainer extends React.Component {
     irisOpening.play();
   }
 
+  activateTimer(){
+    this.setState({gatetimer: 2280000})
+    this.timer = setInterval(this.countDown, timing)
+  }
+
   gateActivationHandler(){
-    this.setState({gateIsActive: !this.state.gateIsActive});
-    (!this.state.gateIsActive)? wormhole.play() : shutdown.play()
+    if (!this.state.gateIsActive){
+      this.setState({gateIsActive: !this.state.gateIsActive}, this.activateTimer())
+      wormhole.play()
+    } else { 
+      this.setState({gateIsActive: !this.state.gateIsActive})
+      clearInterval(this.timer)
+      shutdown.play()
+    }
+  }
+
+  countDown(){
+    if (this.state.gatetimer===0){
+      clearInterval(this.timer)
+      this.setState({gateIsActive: !this.state.gateIsActive})
+      shutdown.play()
+    } else {
+        this.setState({gatetimer: this.state.gatetimer - timing})
+      }
+    
   }
 
   gateReset(){
@@ -118,7 +145,6 @@ export class MainContainer extends React.Component {
           <Alert.Heading>
             <span style={{fontVariant: "small-caps"}}>SG-React:</span> A React-Based Stargate simulator.
           </Alert.Heading>
-          {this.state.gateIsActive.toString()}
         </Alert>
         <Row>
           <Col md={8}>
@@ -133,7 +159,9 @@ export class MainContainer extends React.Component {
                  spin={this.gateSpin}
                  irisToggle={this.irisToggle}
                  irisState = {this.state.irisOpen}
-                 dialModeChange = {this.dialModeChange}/></Col>
+                 dialModeChange = {this.dialModeChange}
+                 gatetimer = {this.state.gatetimer}/>
+        </Col>
           
         </Row>
         <Address
