@@ -4,8 +4,9 @@ import Container from "react-bootstrap/Container";
 import Address from './Address'
 import Gate from "./Gate";
 import GCS from "./GCS"
+import Credits from './Credits'
 // import AddressList from './AddressList';
-import { Row, Col, Alert } from 'react-bootstrap';
+import { Row, Col, Alert, Navbar } from 'react-bootstrap';
 
 import UIFx from "uifx";
 import iris from '../comps/sounds/open.mp3'
@@ -29,8 +30,6 @@ const shutdown = new UIFx({
 
 var timing = 100
 
-
-
 const INITIAL_STATE = {
   dialMode: "DHD",
   c: 0,
@@ -38,9 +37,9 @@ const INITIAL_STATE = {
   gatePos: 0,
   irisOpen: true,
   gateIsActive: false,
-  gatetimer: 0
+  gatetimer: 0,
+  credits: false
 };
-
 
 export class MainContainer extends React.Component {
   constructor(props) {
@@ -53,10 +52,15 @@ export class MainContainer extends React.Component {
     this.gateSpin = this.gateSpin.bind(this);
     this.irisToggle = this.irisToggle.bind(this)
     this.dialModeChange = this.dialModeChange.bind(this)
+    this.setModalShow = this.setModalShow.bind(this)
     this.timer = 0
   }
 
   state = {}
+
+  setModalShow(sms){
+    this.setState({credits: sms})
+  }
 
   componentWillMount(){
     this.setState({...INITIAL_STATE})
@@ -137,15 +141,19 @@ export class MainContainer extends React.Component {
   addressResetHandler(){
     this.setState({address: [0,0,0,0,0,0,1], c:0})
   }
-
+  
   render(){
     return(
       <Container>
-        <Alert variant="dark">
-          <Alert.Heading>
-            <span style={{fontVariant: "small-caps"}}>SG-React:</span> A React-Based Stargate simulator.
-          </Alert.Heading>
-        </Alert>
+        <Navbar bg="dark" variant="dark">
+          <Navbar.Brand href="#home">ReactGate</Navbar.Brand>
+          <Navbar.Collapse className="justify-content-end">
+          <Navbar.Text>
+            Made by <a href="#i" onClick={() => this.setModalShow(true)}>alucard87pl & contributors</a>
+          </Navbar.Text>
+        </Navbar.Collapse>
+        </Navbar>
+        <br/>
         <Row>
           <Col md={8}>
             <Gate gatePos={this.state.gatePos}
@@ -162,7 +170,6 @@ export class MainContainer extends React.Component {
                  dialModeChange = {this.dialModeChange}
                  gatetimer = {this.state.gatetimer}/>
         </Col>
-          
         </Row>
         <Address
         setAddress={this.state.address}
@@ -178,6 +185,7 @@ export class MainContainer extends React.Component {
             gateActivationHandler={this.gateActivationHandler}
             />
         </Row>
+        <Credits show={this.state.credits} onHide={() => this.setModalShow(false)}/>
       </Container>
     )
   }
