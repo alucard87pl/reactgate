@@ -3,6 +3,9 @@ import { Modal } from 'react-bootstrap';
 
 class Credits extends Component {
     render() {
+        const css = {
+            fontSize: "small"
+        }
         return (
             <Modal
             {...this.props}
@@ -20,9 +23,10 @@ class Credits extends Component {
         <ul>
             <li><a href='https://github.com/Kuboczoch'  target='#blank'>Kuboczoch</a></li>
         </ul>
-        <h4>Acknowledgements</h4>
-        <p>Stargate, SG-1 and all affiliated imagery and terminology are property of MGM</p>
-        <p>The stargate image and glyphs taken from <a href='http://www.rdanderson.com/stargate/glyphs/index.htm' target='#blank'>rdanderson.com</a></p>
+        <hr/>
+        <h6>Acknowledgements</h6>
+        <p style={css}>Stargate, SG-1 and all affiliated imagery and terminology are property of MGM<br/>
+        The stargate image and glyphs taken from <a href='http://www.rdanderson.com/stargate/glyphs/index.htm' target='#blank'>rdanderson.com</a></p>
       </Modal.Body>
       <Modal.Footer>
           View source on&nbsp;<a href='https://github.com/alucard87pl/reactgate' target='#blank'>GitHub</a>
