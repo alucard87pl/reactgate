@@ -16,6 +16,7 @@ const names = [
     "Capricorn",
     "Pisces Austrinus",
     "Equuleus",
+    "Aquarius",
     "Pegasus",
     "Sculptor",
     "Pisces",
