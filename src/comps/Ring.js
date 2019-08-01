@@ -31,7 +31,9 @@ export class Ring extends Component {
         max={19}
         step={1}
         defaultValue={0}
-        value={this.state.gatePos}
+        value={
+          this.state.gatePos > 19 ? this.state.gatePos - 39 : this.state.gatePos
+        }
         disabled
       />
     );
