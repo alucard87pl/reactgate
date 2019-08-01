@@ -101,7 +101,7 @@ export class MainContainer extends React.Component {
   }
 
   gateReset() {
-    this.setState({ gatePos: 0 });
+    this.setState({ gatePos: 0, gatetimer: 0 });
   }
 
   dialModeChange(e) {
@@ -183,6 +183,9 @@ export class MainContainer extends React.Component {
               irisState={this.state.irisOpen}
               dialModeChange={this.dialModeChange}
               gatetimer={this.state.gatetimer}
+              address={this.state.address}
+              counter={this.state.c}
+              addressUpdateHandler={this.addressUpdateHandler}
             />
           </Col>
         </Row>
