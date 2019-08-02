@@ -36,7 +36,7 @@ export class AddressList extends Component {
         <div style={scrollbox}>
           {knownAddresses.map(({ value, label }) => {
             return (
-              <Button variant='light' key={label} block>
+              <Button variant='outline-dark' key={label} block>
                 <div className='d-flex justify-content-between'>
                   <div>
                     <b>{label}</b>
@@ -46,6 +46,7 @@ export class AddressList extends Component {
                       return (
                         <img
                           src={this.glyphLookup(e)}
+                          key={label + "-g" + value.indexOf(e)} //need to figure how this can be non-duplicating
                           alt={e}
                           width={20}
                           height={20}
