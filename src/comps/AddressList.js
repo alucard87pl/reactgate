@@ -9,6 +9,10 @@ let scrollbox = {
   height: "500px"
 };
 
+const headerCaps = {
+  fontVariant: "small-caps"
+};
+
 export class AddressList extends Component {
   glyphLookup(v) {
     if (v === 0) {
@@ -26,7 +30,7 @@ export class AddressList extends Component {
     return (
       <Alert variant='dark'>
         <Alert.Heading>
-          ADDRESS LIST
+          <div style={headerCaps}>Address List</div>
           <hr />
         </Alert.Heading>
         <div style={scrollbox}>
@@ -34,7 +38,9 @@ export class AddressList extends Component {
             return (
               <Button variant='light' key={label} block>
                 <div className='d-flex justify-content-between'>
-                  <div>{label}</div>
+                  <div>
+                    <b>{label}</b>
+                  </div>
                   <div>
                     {value.map(e => {
                       return (

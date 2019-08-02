@@ -17,6 +17,10 @@ const lock = new UIFx({
   volume: 0.1
 });
 
+const headerCaps = {
+  fontVariant: "small-caps"
+};
+
 export class GCS extends Component {
   constructor(props) {
     super(props);
@@ -90,7 +94,7 @@ export class GCS extends Component {
     return (
       <Alert variant='dark'>
         <Alert.Heading>
-          GATE CONTROL SYSTEMS <hr />
+          <div style={headerCaps}>Gate Control Systems</div> <hr />
         </Alert.Heading>
         <div className='d-flex flex-column'>
           Dialing Mode
