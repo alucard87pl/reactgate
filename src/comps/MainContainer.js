@@ -5,7 +5,7 @@ import Address from "./Address";
 import Gate from "./Gate";
 import GCS from "./GCS";
 import Credits from "./Credits";
-// import AddressList from './AddressList';
+import AddressList from "./AddressList";
 import { Row, Col, Navbar } from "react-bootstrap";
 
 import UIFx from "uifx";
@@ -101,7 +101,7 @@ export class MainContainer extends React.Component {
   }
 
   gateReset() {
-    this.setState({ gatePos: 0, gatetimer: 0 });
+    this.setState({ gatePos: 0, gatetimer: 0 }, console.log("boo"));
   }
 
   dialModeChange(e) {
@@ -153,7 +153,7 @@ export class MainContainer extends React.Component {
 
   render() {
     return (
-      <Container>
+      <Container fluid>
         <Navbar bg='dark' variant='dark'>
           <Navbar.Brand href='#home'>ReactGate</Navbar.Brand>
           <Navbar.Collapse className='justify-content-end'>
@@ -166,15 +166,18 @@ export class MainContainer extends React.Component {
           </Navbar.Collapse>
         </Navbar>
         <br />
-        <Row>
-          <Col md={8}>
+        <Row className='justify-content-md-center'>
+          <Col>
+            <AddressList />
+          </Col>
+          <Col md={6}>
             <Gate
               gatePos={this.state.gatePos}
               iris={this.state.irisOpen}
               gateIsActive={this.state.gateIsActive}
             />
           </Col>
-          <Col md={4}>
+          <Col>
             <GCS
               gatePos={this.state.gatePos}
               gateReset={this.gateReset}
@@ -190,7 +193,7 @@ export class MainContainer extends React.Component {
           </Col>
         </Row>
         <Address setAddress={this.state.address} />
-        <Row>
+        <Row className='justify-content-md-center'>
           <Keyboard
             setAddress={this.state.address}
             addressUpdateHandler={this.addressUpdateHandler}

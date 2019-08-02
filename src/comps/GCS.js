@@ -57,6 +57,7 @@ export class GCS extends Component {
 
   componentWillReceiveProps(newProps) {
     this.setState({
+      gateReset: newProps.gateReset,
       address: newProps.address,
       counter: newProps.counter,
       gatePos: newProps.gatePos,
@@ -114,7 +115,12 @@ export class GCS extends Component {
         <div className='d-flex justify-content-between'>
           <div>Remaining Gate Time: </div>
           <div>
-            <Button variant='outline-danger' size='sm'>
+            <Button
+              variant='danger'
+              size='sm'
+              onclick={this.props.gateReset}
+              active={false}
+            >
               <b>{this.msToTime(this.state.gatetimer)}</b>
             </Button>
           </div>
