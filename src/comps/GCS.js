@@ -67,6 +67,7 @@ export class GCS extends Component {
       gatePos: newProps.gatePos,
       irisState: newProps.irisState,
       dialModeChange: newProps.dialModeChange,
+      dialMode: newProps.dialMode,
       gatetimer: newProps.gatetimer
     });
   }
@@ -108,10 +109,10 @@ export class GCS extends Component {
             <ToggleButton variant='outline-success' value={"DHD"}>
               DHD
             </ToggleButton>
-            <ToggleButton variant='outline-dark' value={"SGC"} disabled>
+            <ToggleButton variant='outline-dark' value={"SGC"}>
               SGC
             </ToggleButton>
-            <ToggleButton variant='outline-dark' value={"MNL"} disabled>
+            <ToggleButton variant='outline-dark' value={"MNL"}>
               MANUAL
             </ToggleButton>
           </ToggleButtonGroup>
@@ -122,7 +123,7 @@ export class GCS extends Component {
             <Button
               variant='danger'
               size='sm'
-              onclick={this.props.gateReset}
+              onClick={this.props.gateReset}
               active={false}
             >
               <b>{this.msToTime(this.state.gatetimer)}</b>
@@ -136,36 +137,42 @@ export class GCS extends Component {
         Gate Ring Actuation Servo System (GRASS):
         <div className='d-flex flex-column'>
           <ButtonGroup block='true'>
-            <Button variant='outline-warning'>⟲A</Button>
-            <Button onClick={this.props.spin} direction='ccw'>
+            <Button
+              onClick={this.props.spin}
+              direction='ccw'
+              disabled={this.state.dialMode !== "MNL"}
+            >
               ⟲
             </Button>
-            <Button variant='danger'>HALT</Button>
-            <Button onClick={this.props.spin} direction='cw'>
+            <Button
+              variant='danger'
+              block
+              disabled={
+                this.state.address.includes(this.state.gatePos) ||
+                this.state.counter === 6 ||
+                this.state.dialMode !== "MNL"
+              }
+              onClick={this.manualGlyphLock}
+            >
+              <div className='d-flex justify-content-between'>
+                <div>
+                  MANUAL GLYPH LOCK
+                  <br />
+                  {this.glyphNameLookup(this.state.gatePos)}
+                </div>
+                <div>
+                  <img src={this.glyphLookup(this.state.gatePos)} alt='' />
+                </div>
+              </div>
+            </Button>
+            <Button
+              onClick={this.props.spin}
+              direction='cw'
+              disabled={this.state.dialMode !== "MNL"}
+            >
               ⟳
             </Button>
-            <Button variant='outline-warning'>⟳A</Button>
           </ButtonGroup>
-          <Button
-            variant='danger'
-            block
-            disabled={
-              this.state.address.includes(this.state.gatePos) ||
-              this.state.counter === 6
-            }
-            onClick={this.manualGlyphLock}
-          >
-            <div className='d-flex justify-content-between'>
-              <div>
-                MANUAL GLYPH LOCK
-                <br />
-                {this.glyphNameLookup(this.state.gatePos)}
-              </div>
-              <div>
-                <img src={this.glyphLookup(this.state.gatePos)} alt='' />
-              </div>
-            </div>
-          </Button>
           <br />
           <Button variant='danger' block onClick={this.props.gateReset}>
             RESET GATE POSITION

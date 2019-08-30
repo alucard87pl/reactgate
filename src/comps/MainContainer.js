@@ -105,14 +105,7 @@ export class MainContainer extends React.Component {
   }
 
   dialModeChange(e) {
-    switch (e) {
-      case "DHD":
-        this.setState({ dialMode: e });
-        break;
-
-      default:
-        break;
-    }
+    this.setState({ dialMode: e });
   }
 
   gateSpin(e) {
@@ -183,6 +176,7 @@ export class MainContainer extends React.Component {
               irisToggle={this.irisToggle}
               irisState={this.state.irisOpen}
               dialModeChange={this.dialModeChange}
+              dialMode={this.state.dialMode}
               gatetimer={this.state.gatetimer}
               address={this.state.address}
               counter={this.state.c}

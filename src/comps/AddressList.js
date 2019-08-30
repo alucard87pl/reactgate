@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Alert, Button } from "react-bootstrap";
+import uuid from "uuid";
+
 import glyphs from "./glyphs";
 import blank from "./blank.png";
 import knownAddresses from "./addressBook";
@@ -46,7 +48,9 @@ export class AddressList extends Component {
                       return (
                         <img
                           src={this.glyphLookup(e)}
-                          key={label + "-g" + value.indexOf(e)} //need to figure how this can be non-duplicating
+                          key={
+                            label + "-g" + value.indexOf(e) + "-" + uuid.v4()
+                          } //need to figure how this can be non-duplicating
                           alt={e}
                           width={20}
                           height={20}
