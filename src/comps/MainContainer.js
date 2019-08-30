@@ -167,9 +167,7 @@ export class MainContainer extends React.Component {
         </Navbar>
         <br />
         <Row className='justify-content-md-center'>
-          <Col>
-            <AddressList />
-          </Col>
+          <Col>{/* <AddressList /> */}</Col>
           <Col md={6}>
             <Gate
               gatePos={this.state.gatePos}
